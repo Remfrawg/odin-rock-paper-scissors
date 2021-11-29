@@ -6,11 +6,12 @@ let playerScore = 0;
 let tie = 0;
 let gameChoice = 0;
 let playerChoice = 0;
-//for (let i =0; i<100; i++){
-   // game(Math.floor(Math.random()*3));
-//}
+
 function beginGame(n){
-    if (n==3){ 
+    checkForReset(n);
+}
+function checkForReset(n){
+    if (n==3){
         resetGame();
     }
     else{
@@ -19,43 +20,42 @@ function beginGame(n){
 }
 function game(playerVal){
     var winner;
-        gameVal = gameSelection();
-        winner = compare(playerVal,gameVal);
-        saveWinner(winner);
+    gameVal = gameSelection();
+    winner = compareSelections(playerVal,gameVal);
+    saveWinner(winner);
 }
 
 function gameSelection(){
     return Math.floor(Math.random()*3);
 }
 
-function compare(p,c){
+function compareSelections(p,c){
     if (p==c){
         return 2;
     }
- switch (p){
-     case 0:
-         if (c==1){
-             return 1;
-         }
-         else{
-             return 0;
-         }
-
-     case 1:
-        if (c==2){
-            return 1;
-        }
-        else{
-            return 0;
-        }
-     case 2:
-        if (c==0){
-            return 1;
-        }
-        else{
-            return 0;
-        }
- }
+    switch (p){
+        case 0:
+            if (c==1){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        case 1:
+            if (c==2){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        case 2:
+            if (c==0){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+    }
 }
 //Doesn't print out the fifth number before the alert message 
 function saveWinner(n){
@@ -66,24 +66,27 @@ function saveWinner(n){
     }
     else if (n ==1){
         gameScore++;
+        console.log("changing html");
         document.getElementById("game").innerHTML=("Game score: " + gameScore);
     }
     else if (n==2){
         tie++;
         document.getElementById("ties").innerHTML=("Ties: " + tie);
-       // console.log("tie");
-    }
+    }   
+    checkForEnd();
+}
+
+function checkForEnd(){
     if (playerScore >= 5){ 
-       alertM("won");
-    } else  if (gameScore>=5){
-       alertM("lost");
-    }
-    
+        alert("you won!");
+        resetGame();
+     } else  if (gameScore>=5){
+        alert("you lost! To a computer!");
+        resetGame();
+     }
+     
 }
-function alertM(message){
- alert("You " + message);
- resetGame();
-}
+
 function resetGame(){
      playerScore = 0;
      gameScore = 0;
@@ -92,9 +95,3 @@ function resetGame(){
      document.getElementById("game").innerHTML=("Game score: " + gameScore);
      document.getElementById("ties").innerHTML=("Ties: " + tie);
 }
-
-//function checkWin(){
-   // 
-  //  else if (gameScore>=5){
-  //  }
-//}
